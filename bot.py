@@ -111,18 +111,23 @@ def save_offset(offset):
 
 
 def main():
+    import time
     print("🤖 Bot is running... (Ctrl+C to stop)")
     offset = load_offset()
     while True:
-        updates = get_updates(offset)
-        for update in updates:
-            offset = update["update_id"] + 1
-            save_offset(offset)
-            msg = update.get("message", {})
-            text = msg.get("text", "")
-            chat_id = str(msg.get("chat", {}).get("id", ""))
-            if text and chat_id == GROUP_ID:
-                handle(text)
+        try:
+            updates = get_updates(offset)
+            for update in updates:
+                offset = update["update_id"] + 1
+                save_offset(offset)
+                msg = update.get("message", {})
+                text = msg.get("text", "")
+                chat_id = str(msg.get("chat", {}).get("id", ""))
+                if text and chat_id == GROUP_ID:
+                    handle(text)
+        except Exception as e:
+            print(f"Connection error: {e} — retrying in 10s")
+            time.sleep(10)
 
 
 if __name__ == "__main__":
