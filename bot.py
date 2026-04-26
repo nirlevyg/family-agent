@@ -121,9 +121,10 @@ def main():
     offset = load_offset()
     while True:
         try:
+            import datetime
+            t = datetime.datetime.now().strftime("%H:%M:%S")
             updates = get_updates(offset)
-            if updates:
-                print(f"Got {len(updates)} updates")
+            print(f"[{t}] Got {len(updates)} updates, offset={offset}")
             for update in updates:
                 offset = update["update_id"] + 1
                 save_offset(offset)
