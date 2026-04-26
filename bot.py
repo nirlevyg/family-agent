@@ -123,6 +123,7 @@ def main():
                 msg = update.get("message", {})
                 text = msg.get("text", "")
                 chat_id = str(msg.get("chat", {}).get("id", ""))
+                print(f"msg from chat_id={chat_id!r}, GROUP_ID={GROUP_ID!r}, match={chat_id == GROUP_ID}")
                 if text and chat_id == GROUP_ID:
                     handle(text)
         except Exception as e:
