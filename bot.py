@@ -25,7 +25,6 @@ def get_updates(offset=None):
         params=params,
         timeout=httpx.Timeout(connect=10, read=15, write=10, pool=10),
     )
-    print(f"raw: {r.text[:300]}")
     return r.json().get("result", [])
 
 
@@ -118,14 +117,11 @@ def save_offset(offset):
 
 def main():
     import time
-    print(f"🤖 Bot is running... GROUP_ID={GROUP_ID!r}")
+    print("🤖 Bot is running...")
     offset = load_offset()
     while True:
         try:
-            import datetime
-            t = datetime.datetime.now().strftime("%H:%M:%S")
             updates = get_updates(offset)
-            print(f"[{t}] Got {len(updates)} updates, offset={offset}")
             for update in updates:
                 offset = update["update_id"] + 1
                 save_offset(offset)
