@@ -25,11 +25,12 @@ def get_updates(offset=None):
 
 
 def send(text: str):
-    httpx.post(f"{BASE_URL}/sendMessage", json={
+    r = httpx.post(f"{BASE_URL}/sendMessage", json={
         "chat_id": GROUP_ID,
         "text": text,
         "parse_mode": "Markdown",
     })
+    print(f"sendMessage status={r.status_code} body={r.text[:200]}")
 
 
 def load_tasks():
