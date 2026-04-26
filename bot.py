@@ -25,6 +25,7 @@ def get_updates(offset=None):
         params=params,
         timeout=httpx.Timeout(connect=10, read=15, write=10, pool=10),
     )
+    print(f"raw: {r.text[:300]}")
     return r.json().get("result", [])
 
 
