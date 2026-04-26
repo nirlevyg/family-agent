@@ -117,7 +117,7 @@ def save_offset(offset):
 
 def main():
     import time
-    print("🤖 Bot is running... (Ctrl+C to stop)")
+    print(f"🤖 Bot is running... GROUP_ID={GROUP_ID!r}")
     offset = load_offset()
     while True:
         try:
