@@ -66,8 +66,11 @@ def save_tasks(pending, done):
 def handle(text: str):
     text = text.strip()
 
-    if text.startswith("/add ") or text.startswith("/הוסף "):
-        task = re.sub(r"^/\S+\s+", "", text)
+    if text.startswith("/add ") or text.startswith("/הוסף ") or re.match(r"^משימה[:\s]", text, re.IGNORECASE):
+        if re.match(r"^משימה[:\s]", text, re.IGNORECASE):
+            task = re.sub(r"^משימה[:\s]\s*", "", text, flags=re.IGNORECASE)
+        else:
+            task = re.sub(r"^/\S+\s+", "", text)
         pending, done = load_tasks()
         pending.append(task)
         save_tasks(pending, done)
