@@ -17,13 +17,13 @@ BASE_URL = f"https://api.telegram.org/bot{TOKEN}"
 
 
 def get_updates(offset=None):
-    params = {"timeout": 30}
+    params = {"timeout": 0, "limit": 100}
     if offset is not None:
         params["offset"] = offset
     r = httpx.get(
         f"{BASE_URL}/getUpdates",
         params=params,
-        timeout=httpx.Timeout(connect=10, read=40, write=10, pool=10),
+        timeout=httpx.Timeout(connect=10, read=15, write=10, pool=10),
     )
     return r.json().get("result", [])
 
@@ -134,8 +134,10 @@ def main():
                 if text and chat_id == GROUP_ID:
                     handle(text)
         except Exception as e:
-            print(f"Connection error: {e} — retrying in 10s")
-            time.sleep(10)
+            print(f"Connection error: {e} — retrying in 5s")
+            time.sleep(5)
+        else:
+            time.sleep(3)
 
 
 if __name__ == "__main__":
