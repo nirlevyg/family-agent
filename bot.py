@@ -122,6 +122,8 @@ def main():
     while True:
         try:
             updates = get_updates(offset)
+            if updates:
+                print(f"Got {len(updates)} updates")
             for update in updates:
                 offset = update["update_id"] + 1
                 save_offset(offset)
